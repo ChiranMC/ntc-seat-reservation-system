@@ -1,19 +1,25 @@
 const express = require("express");
+const { testConnection } = require("./sequelize");
 const app = express();
 const port = process.env.PORT || 3001;
 
-app.get("/", (req, res) => res.type('html').send(html));
 
-const server = app.listen(port, () => console.log(`Example app listening on port ${port}!`));
+(async () => {
+  try {
+    await testConnection();
+    console.log("Database connection successful!");
+  } catch (error) {
+    console.error("Database connection failed:", error);
+    process.exit(1); 
+  }
+})();
 
-server.keepAliveTimeout = 120 * 1000;
-server.headersTimeout = 120 * 1000;
-
+// HTML content
 const html = `
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Hello from Render!</title>
+    <title>Hello from Chiran!</title>
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
     <script>
       setTimeout(() => {
@@ -58,4 +64,15 @@ const html = `
     </section>
   </body>
 </html>
-`
+`;
+
+// Route to serve the HTML page
+app.get("/", (req, res) => res.type("html").send(html));
+
+// Start the server
+const server = app.listen(port, () =>
+  console.log(`Example app listening on port ${port}!`)
+);
+
+server.keepAliveTimeout = 120 * 1000;
+server.headersTimeout = 120 * 1000;
