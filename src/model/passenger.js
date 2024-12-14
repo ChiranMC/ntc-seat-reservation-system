@@ -1,7 +1,7 @@
 const { DataTypes } = require('sequelize');
 const sequelize = require('../config/database');
 
-const Passenger = sequelize.define('Passenger', {
+const Passenger = sequelize.define('passenger', {
   nic_no: {
     type: DataTypes.STRING,
     primaryKey: true,
