@@ -1,4 +1,4 @@
-const Passenger = require('../models/passenger');
+const Passenger = require('../model/passenger');
 
 class PassengerRepository {
   async createPassenger(passenger) {
