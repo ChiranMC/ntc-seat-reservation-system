@@ -6,7 +6,7 @@ class RoutesService {
             const routes = await RoutesRepository.getAllRoutes();
             return routes;
         } catch (error) {
-            throw new Error("error occured while fetching all route information Error :${error.message} ");
+            throw new Error(`Error occurred while fetching all route information: ${error.message}`);
         }
     }
 }
