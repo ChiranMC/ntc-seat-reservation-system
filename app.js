@@ -5,10 +5,12 @@ const port = process.env.PORT || 3001;
 
 const passengerRoutes = require('./src/routes/passengerRoutes');
 const routesRoutes = require('./src/routes/routesRoutes');
+const schedules = require('./src/routes/busTimeScheduleRoutes');
 
 app.use(express.json());
 app.use('/passenger', passengerRoutes);
 app.use('/bus-routes', routesRoutes);
+app.use('/schedules', schedules);
 app.use
 // (async () => {
 //   try {
