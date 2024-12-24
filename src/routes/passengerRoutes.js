@@ -16,7 +16,7 @@ router.post('/register', PassengerController.registerPassenger);
 
 /**
  * @swagger
- * /register:
+ * /login:
  *   post:
  *     summary: passenger login verification
  *     description: login end point
