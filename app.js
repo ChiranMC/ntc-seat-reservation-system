@@ -3,11 +3,15 @@ const { testConnection } = require("./src/config/database");
 const app = express();
 const port = process.env.PORT || 3001;
 
+const swaggerUi = require('swagger-ui-express');
+const swaggerConfig = require('./src/config/swaggerInfo');
+
 const passengerRoutes = require('./src/routes/passengerRoutes');
 const routesRoutes = require('./src/routes/routesRoutes');
 const schedules = require('./src/routes/busTimeScheduleRoutes');
 
 app.use(express.json());
+app.use('/api-checker', swaggerUi.serve, swaggerUi.setup(swaggerConfig));
 app.use('/passenger', passengerRoutes);
 app.use('/bus-routes', routesRoutes);
 app.use('/schedules', schedules);
@@ -21,8 +25,6 @@ app.use
 //     process.exit(1); 
 //   }
 // })();
-
-// HTML content
 const html = `
 <!DOCTYPE html>
 <html>

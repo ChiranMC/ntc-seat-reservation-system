@@ -3,6 +3,16 @@ const BusTimeSchedulesController = require('../controller/butTimeSchedulesContol
 
 const router = express.Router();
 
+/**
+ * @swagger
+ * /getSchedules:
+ *   get:
+ *     summary: get All schedules
+ *     description: fetching all schedules by id
+ *     responses:
+ *       200:
+ *         description: Successfully got schedule data.
+ */
 router.get('/getSchedules', BusTimeSchedulesController.getSchedulesByRouteId);
 
 module.exports = router;
