@@ -4,7 +4,7 @@ const PassengerController = require('../controller/passengerController');
 const router = express.Router();
 /**
  * @swagger
- * /register:
+ * /passenger/register:
  *   post:
  *     summary: Register a new passenger
  *     description: registration end point
@@ -16,7 +16,7 @@ router.post('/register', PassengerController.registerPassenger);
 
 /**
  * @swagger
- * /login:
+ * /passenger/login:
  *   post:
  *     summary: passenger login verification
  *     description: login end point

@@ -5,7 +5,7 @@ const router = express.Router();
 
 /**
  * @swagger
- * /getAllRoutes:
+ * /bus-routes/getAllRoutes:
  *   get:
  *     summary: get All routes
  *     description: fetching all routes
