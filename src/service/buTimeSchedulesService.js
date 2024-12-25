@@ -18,8 +18,11 @@ class BusTimeSchedulesService{
 
     async getBuseDetailsByScehduleId(slot_id){
         const scheduleDetails = BusTimeSchedulesRepository.findBySlotId(slot_id);
+        console.log(`got all schedule details for slot id-> ${slot_id}  info : ${scheduleDetails}`)
         const routeDetails = this.routeRepo.getOriginAndDestination(scheduleDetails.route_id);
+        console.log(`fetched all route details according to route id from schedule details ${scheduleDetails.route_id}`);
         const busDetails = BusesService.getBusByBusNTC(scheduleDetails.bus_ntc);
+        console.log(`fetched necessary bus infromation for the ntc -> ${scheduleDetails.bus_ntc}`);
 
         return new ScheduledBusDTO(
             routeDetails.origin,
