@@ -15,4 +15,6 @@ const router = express.Router();
  */
 router.get('/getSchedules', BusTimeSchedulesController.getSchedulesByRouteId);
 
+router.get('/getAllBusDetails/:slot_id',(req, res) => BusTimeSchedulesController.getFullBusDetailsBySlotId(req, res));
+
 module.exports = router;
