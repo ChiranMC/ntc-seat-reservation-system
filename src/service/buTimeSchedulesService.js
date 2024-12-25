@@ -1,7 +1,7 @@
 const BusTimeSchedulesRepository = require('../repository/busTimeSchedulesRepository');
 const RoutesRepository = require('../repository/routesRepository');
 
-const ScheduledBusDTO = require('../DTO/scheduledBusDTO');
+const ScheduledBusDTO = require('../DTO/scheduledBusDetailsDTO');
 
 const BusesService = require('./busesService');
 const routeService = require('./routesService');
@@ -16,7 +16,7 @@ class BusTimeSchedulesService{
         const scheduleDetails = BusTimeSchedulesRepository.findBySlotId(slot_id);
         const routeDetails = RoutesRepository.getOriginAndDestination(scheduleDetails.route_id)
         const busDetails = BusesService.getBusByBusNTC(scheduleDetails.bus_ntc);
-        
+
         return new ScheduledBusDTO(
             routeDetails.origin,
             routeDetails.destination,
