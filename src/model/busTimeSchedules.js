@@ -1,7 +1,7 @@
 const { DataTypes } = require('sequelize');
 const sequelize = require('../config/database');
-const Buses = require('./buses');
-const Route = require('./routes')
+// const Buses = require('./buses');
+// const Route = require('./routes');
 
 const BusTimeSchedules = sequelize.define('bus_time_schedules', {
     slot_id:{
@@ -19,7 +19,7 @@ const BusTimeSchedules = sequelize.define('bus_time_schedules', {
     timestamps: false,
 });
 
-BusTimeSchedules.belongsTo(Buses, { foreignKey: 'bus_ntc', as: 'bus' });
-BusTimeSchedules.belongsTo(Route, { foreignKey: 'route_id', as: 'route' });
+// BusTimeSchedules.belongsTo(Buses, { foreignKey: 'bus_ntc', as: 'bus' });
+// BusTimeSchedules.belongsTo(Route, { foreignKey: 'route_id', as: 'route' });
 
 module.exports = BusTimeSchedules;
