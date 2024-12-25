@@ -22,19 +22,24 @@ class BusTimeSchedulesService{
             if (!scheduleDetails) {
                 throw new Error(`No schedule found for slot id: ${slot_id}`);
             }
-            console.log(`got all schedule details for slot id-> ${slot_id}  info :`, scheduleDetails);
+
             const routeDetails = await this.routeRepo.getOriginAndDestination(scheduleDetails.route_id);
             console.log(`fetched all route details according to route id from schedule details ${scheduleDetails.route_id}`);
+
             const busDetails = await BusesService.getBusByBusNTC(scheduleDetails.bus_ntc);
             console.log(`fetched necessary bus information for the ntc -> ${scheduleDetails.bus_ntc}`);
-        
+
+            if (!routeDetails || !busDetails) {
+            throw new Error('Failed to fetch route or bus details');
+            }
+
             return new ScheduledBusDTO(
                 routeDetails.origin,
                 routeDetails.destination,
                 scheduleDetails.departure_time,
                 scheduleDetails.arrival_time,
                 busDetails.vehicle_register_number,
-                busDetails.type,
+                busDetails.type
             );
         } catch (error) {
             throw new Error(`Error occurred while fetching all bus info according to scheduled slot: ${error}`);
