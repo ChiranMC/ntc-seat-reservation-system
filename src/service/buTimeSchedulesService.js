@@ -17,14 +17,20 @@ class BusTimeSchedulesService{
 
 
     async getBuseDetailsByScehduleId(slot_id){
-        try{
-            const scheduleDetails = BusTimeSchedulesRepository.findBySlotId(slot_id);
-            console.log(`got all schedule details for slot id-> ${slot_id}  info : ${scheduleDetails}`)
-            const routeDetails = this.routeRepo.getOriginAndDestination(scheduleDetails.route_id);
+        try {
+            // Wait for the schedule details to be fetched
+            const scheduleDetails = await BusTimeSchedulesRepository.findBySlotId(slot_id);
+            console.log(`got all schedule details for slot id-> ${slot_id}  info :`, scheduleDetails);
+        
+            // Wait for the route details to be fetched using the route_id from scheduleDetails
+            const routeDetails = await this.routeRepo.getOriginAndDestination(scheduleDetails.route_id);
             console.log(`fetched all route details according to route id from schedule details ${scheduleDetails.route_id}`);
-            const busDetails = BusesService.getBusByBusNTC(scheduleDetails.bus_ntc);
-            console.log(`fetched necessary bus infromation for the ntc -> ${scheduleDetails.bus_ntc}`);
-
+        
+            // Wait for the bus details to be fetched using the bus_ntc from scheduleDetails
+            const busDetails = await BusesService.getBusByBusNTC(scheduleDetails.bus_ntc);
+            console.log(`fetched necessary bus information for the ntc -> ${scheduleDetails.bus_ntc}`);
+        
+            // Return a new DTO with the resolved values
             return new ScheduledBusDTO(
                 routeDetails.origin,
                 routeDetails.destination,
@@ -34,9 +40,9 @@ class BusTimeSchedulesService{
                 busDetails.type,
                 0
             );
-        }catch(error){
-            throw new Error(`Error occured while fetching all bus info according to sheduled slot ${error}`)
-        }
+        } catch (error) {
+            throw new Error(`Error occurred while fetching all bus info according to scheduled slot: ${error}`);
+        }        
     }
 
 }
