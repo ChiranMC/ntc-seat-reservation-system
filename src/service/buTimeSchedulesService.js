@@ -16,9 +16,8 @@ class BusTimeSchedulesService{
         const scheduleDetails = BusTimeSchedulesRepository.findBySlotId(slot_id);
         const routeDetails = RoutesRepository.getOriginAndDestination(scheduleDetails.route_id)
         const busDetails = BusesService.getBusByBusNTC(scheduleDetails.bus_ntc);
-
-        const scheduledBusDetail = ScheduledBusDTO;
-        return new scheduleDetails(
+        
+        return new ScheduledBusDTO(
             routeDetails.origin,
             routeDetails.destination,
             scheduleDetails.departure_time,
