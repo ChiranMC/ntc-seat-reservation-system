@@ -36,12 +36,12 @@ class BusTimeSchedulesService{
             }
 
             return new ScheduledBusDTO(
-                routeDetails.origin,
-                routeDetails.destination,
-                scheduleDetails.departure_time,
-                scheduleDetails.arrival_time,
-                busDetails.vehicle_register_number,
-                busDetails.type
+                routeDetails.toJSON().origin,
+                routeDetails.toJSON().destination,
+                scheduleDetails.toJSON().departure_time,
+                scheduleDetails.toJSON().arrival_time,
+                busDetails.toJSON().vehicle_register_number,
+                busDetails.toJSON().type
             );
         } catch (error) {
             throw new Error(`Error occurred while fetching all bus info according to scheduled slot: ${error}`);
