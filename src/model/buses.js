@@ -1,5 +1,6 @@
 const { DataTypes } = require('sequelize');
 const sequelize = require('../config/database');
+const BusTimeSchedules = require('./busTimeSchedules');
 
 const Buses = sequelize.define('buses', {
     ntc_registered_number:{

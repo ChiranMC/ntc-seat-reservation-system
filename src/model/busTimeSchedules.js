@@ -1,5 +1,7 @@
 const { DataTypes } = require('sequelize');
 const sequelize = require('../config/database');
+const Buses = require('./buses');
+const Route = require('./routes')
 
 const BusTimeSchedules = sequelize.define('bus_time_schedules', {
     slot_id:{
