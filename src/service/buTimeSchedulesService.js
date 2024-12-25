@@ -14,7 +14,7 @@ class BusTimeSchedulesService{
 
     async getBuseDetailsByScehduleId(slot_id){
         const scheduleDetails = BusTimeSchedulesRepository.findBySlotId(slot_id);
-        const routeDetails = RoutesRepository.getOriginAndDestination(scheduleDetails.route_id)
+        const routeDetails = RoutesRepository.getOriginAndDestination(scheduleDetails.route_id);
         const busDetails = BusesService.getBusByBusNTC(scheduleDetails.bus_ntc);
 
         return new ScheduledBusDTO(
