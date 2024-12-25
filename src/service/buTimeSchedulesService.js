@@ -25,9 +25,11 @@ class BusTimeSchedulesService{
 
             const routeDetails = await this.routeRepo.getOriginAndDestination(scheduleDetails.route_id);
             console.log(`fetched all route details according to route id from schedule details ${scheduleDetails.route_id}`);
+            console.log(`info ---------------> ${routeDetails}`);
 
             const busDetails = await BusesService.getBusByBusNTC(scheduleDetails.bus_ntc);
             console.log(`fetched necessary bus information for the ntc -> ${scheduleDetails.bus_ntc}`);
+            console.log(`info ---------------> ${busDetails}`);
 
             if (!routeDetails || !busDetails) {
             throw new Error('Failed to fetch route or bus details');
