@@ -29,6 +29,9 @@ class BusTimeSchedulesService{
             // Wait for the bus details to be fetched using the bus_ntc from scheduleDetails
             const busDetails = await BusesService.getBusByBusNTC(scheduleDetails.bus_ntc);
             console.log(`fetched necessary bus information for the ntc -> ${scheduleDetails.bus_ntc}`);
+
+
+            console.log(`pay load ------------>>>>>>>>   ${busDetails}`);
         
             // Return a new DTO with the resolved values
             return new ScheduledBusDTO(
