@@ -17,4 +17,7 @@ const BusTimeSchedules = sequelize.define('bus_time_schedules', {
     timestamps: false,
 });
 
+BusTimeSchedules.belongsTo(Buses, { foreignKey: 'bus_ntc' });
+BusTimeSchedules.belongsTo(Route, { foreignKey: 'route_id' });
+
 module.exports = BusTimeSchedules;
