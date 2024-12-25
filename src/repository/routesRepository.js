@@ -11,4 +11,4 @@ class RoutesRepository{
         });
     }
 }
-module.exports =new RoutesRepository();
+module.exports = RoutesRepository;
