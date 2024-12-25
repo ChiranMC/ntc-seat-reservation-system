@@ -14,4 +14,6 @@ const Route = sequelize.define('routes',{
     timestamps: false,
 });
 
+Routes.hasMany(BusTimeSchedules, { foreignKey: 'route_id', as: 'busTimeSchedules' });
+
 module.exports = Route;

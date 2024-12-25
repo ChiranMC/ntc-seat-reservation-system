@@ -18,6 +18,6 @@ const Buses = sequelize.define('buses', {
     timestamps: false,
 });
 
-Buses.hasMany(BusTimeSchedules, { foreignKey: 'bus_ntc' });
+Buses.hasMany(BusTimeSchedules, { foreignKey: 'bus_ntc', as: 'busTimeSchedules' });
 
 module.exports = Buses;
