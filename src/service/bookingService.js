@@ -7,10 +7,15 @@ const BookingDTO = require('../dto/bookingDTO');
 class BookingService {
     checkSeatsAvailability(selectedSeats = [], numberPlate, scheduled_slot, booking_date){
         const bookedSeats = PassengerBookingsRepository.getBookedSeatsListByNumberPlateAndTimeSlot(numberPlate, scheduled_slot, booking_date);
-        const BookedSeatsArray = bookedSeats.map(seat => seat.seat_no);
-        if (BookedSeatsArray.filter(seats => !selectedSeats.includes(seats))) {
-            return true;
-        }else{
+        if (Array.isArray(bookedSeats)) {
+            const BookedSeatsArray = bookedSeats.map(seat => seat.seat_no);
+            if (BookedSeatsArray.filter(seat => !selectedSeats.includes(seat)).length > 0) {
+                return true;
+            } else {
+                return false;
+            }
+        } else {
+            console.error('Error: bookedSeats is not an array');
             return false;
         }
     }
@@ -32,7 +37,7 @@ class BookingService {
                 bookingData.numberPlate,
                 bookingData.scheduled_slot
             );
-            const seatsAvailable = await this.checkSeatsAvailability(booking.selectedSeats, booking.numberPlate, booking.scheduled_slot);
+            const seatsAvailable = await this.checkSeatsAvailability(booking.selectedSeats, booking.numberPlate, booking.scheduled_slot, booking.bookingDate);
             
             if (!seatsAvailable) {
                 const paymentIssuedTime = new Date();
