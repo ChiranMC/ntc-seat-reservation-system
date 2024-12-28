@@ -8,7 +8,7 @@ const PassengerBooking = sequelize.define('passengerBooking', {
         autoIncrement: true
     },
     passenger_id: DataTypes.STRING,
-    payment_reciept_id: DataTypes.INTEGER,
+    payment_receipt_id: DataTypes.INTEGER,
     number_plate: DataTypes.STRING,
     scheduled_slot: DataTypes.INTEGER,
     seat_no: DataTypes.STRING,
