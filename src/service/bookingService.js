@@ -20,13 +20,17 @@ class BookingService {
         }
     }
     
-    async sendpayment(passenger_id, paymentAmount, issueTime){
-        const payment = {passenger_id, paymentAmount, issueTime};
-        const confirmation = await PaymentRecieptHistoryRepository.addNewRecieptHistory(payment);
-        return confirmation;
+    async sendpayment(passenger_id, paymentAmount, issueTime) {
+        const payment = { passenger_id, paymentAmount, issueTime };
+        try {
+            const confirmation = await PaymentRecieptHistoryRepository.addNewRecieptHistory(payment);
+            return confirmation;
+        } catch (error) {
+            console.error("Error inserting payment info:", error);
+            return null;
+        }
     }
-
-
+    
     async BookingSeats(bookingData) {
         try {
             const booking = new BookingDTO(
@@ -37,17 +41,25 @@ class BookingService {
                 bookingData.numberPlate,
                 bookingData.scheduled_slot
             );
-            console.log(`all dto info - > debug ${booking}`);
-            const seatsAvailable = await this.checkSeatsAvailability(booking.selectedSeats, booking.numberPlate, booking.scheduled_slot, booking.bookingDate);
-            
+            console.log(`All DTO info - Debug info: ${JSON.stringify(booking)}`);
+            const seatsAvailable = await this.checkSeatsAvailability(
+                booking.selectedSeats,
+                booking.numberPlate,
+                booking.scheduled_slot,
+                booking.bookingDate
+            );
             if (seatsAvailable) {
                 const paymentIssuedTime = new Date();
-                console.log(`payment.payment amount -> ${booking.paymentAmount}`);
-                const payment = await this.sendpayment(booking.passenger_id, booking.paymentAmount, paymentIssuedTime);
-                console.log(`payment id ${payment}`);
-                let bookedCount = 0;
+                console.log(`Payment amount: ${booking.paymentAmount}`);
+                const payment = await this.sendpayment(
+                    booking.passenger_id,
+                    booking.paymentAmount,
+                    paymentIssuedTime
+                );
                 if (payment) {
-                    booking.selectedSeats.forEach(async (seat) => {
+                    console.log(`Payment ID: ${payment}`);
+                    let bookedCount = 0;
+                    for (const seat of booking.selectedSeats) {
                         const bookinfo = {
                             passenger_id: booking.passenger_id,
                             payment_reciept_id: payment,
@@ -56,39 +68,31 @@ class BookingService {
                             seat_no: seat,
                             booking_date: booking.bookingDate
                         };
-                
+    
                         const saved = await PassengerBookingsRepository.createBooking(bookinfo);
                         if (saved) {
                             bookedCount++;
-                        }});
-                    // for (let seat of booking.selectedSeats) {
-                    //     const bookinfo = {
-                    //         passenger_id: booking.passenger_id,
-                    //         payment_reciept_id: payment,
-                    //         number_plate: booking.numberPlate,
-                    //         scheduled_slot: booking.scheduled_slot,
-                    //         seat_no: seat,
-                    //         booking_date: booking.bookingDate
-                    //     };
-                    //     const saved = await PassengerBookingsRepository.createBooking(bookinfo);
-                    //     if(saved){
-                    //         bookedCount++;
-                    //     }
-
-                    // }
-                    if (bookedCount>0) {
-                        return 1;
+                        }
+                    }
+    
+                    if (bookedCount > 0) {
+                        return bookedCount;
+                    } else {
+                        console.error("Failed to book any seats.");
+                        return 0;
                     }
                 } else {
-                    console.error('Payment verification failed to complete');
+                    console.error("Payment verification failed.");
                     return 0;
                 }
             } else {
-                console.error(`Seats that passenger -> ${booking.passenger_id} trying to book are already booked.`);
+                console.error(
+                    `Seats selected by passenger ${booking.passenger_id} are already booked.`
+                );
                 return 0;
             }
         } catch (error) {
-            console.error('Error occurred while booking seats:', error);
+            console.error("Error occurred while booking seats:", error);
             return 0;
         }
     }
