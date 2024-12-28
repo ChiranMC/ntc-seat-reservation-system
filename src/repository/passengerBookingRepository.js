@@ -1,9 +1,9 @@
 const PassengerBookings = require('../model/passengerBookings');
 
 class PassengerBookingsRepository{
-    async getBookedSeatsListByNumberPlateAndTimeSlot(number_plate, scheduled_slot, booking_date){
+    async getBookedSeatsListByNumberPlateAndTimeSlot(number_plate, scheduled_slot, booking_date) {
         try {
-            const bookedSeats = PassengerBookings.findAll({
+            const bookedSeats = await PassengerBookings.findAll({
                 where: {
                     number_plate: number_plate,
                     scheduled_slot: scheduled_slot,
@@ -11,9 +11,10 @@ class PassengerBookingsRepository{
                 },
                 attributes: ['seat_no'],
             });
-            return bookedSeats;
+            return bookedSeats.map(seat => seat.seat_no);
         } catch (error) {
             console.error(error);
+            return [];
         }
     }
 

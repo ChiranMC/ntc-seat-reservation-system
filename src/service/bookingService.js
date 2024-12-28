@@ -7,16 +7,16 @@ const BookingDTO = require('../dto/bookingDTO');
 class BookingService {
     checkSeatsAvailability(selectedSeats = [], numberPlate, scheduled_slot, booking_date){
         const bookedSeats = PassengerBookingsRepository.getBookedSeatsListByNumberPlateAndTimeSlot(numberPlate, scheduled_slot, booking_date);
-        if (Array.isArray(bookedSeats)) {
-            const BookedSeatsArray = bookedSeats.map(seat => seat.seat_no);
+        if (bookedSeats.length > 0) {
+            const BookedSeatsArray = bookedSeats;
             if (BookedSeatsArray.filter(seat => !selectedSeats.includes(seat)).length > 0) {
                 return true;
             } else {
                 return false;
             }
         } else {
-            console.error('Error: bookedSeats is not an array');
-            return false;
+            console.log('No seats booked for the given date and slot');
+            return true;
         }
     }
     
