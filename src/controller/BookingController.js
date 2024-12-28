@@ -5,7 +5,7 @@ class BookingController{
         try {
             const { bookingInfo } = req.body;
             console.log("request came to save booking info");
-            const status = await BookingService.BookingSeats(bookingInfo);
+            const status = await BookingService.bookSeats(bookingInfo);
             if (status>0) {
                 res.status(200).json(`Successfully saved booking information for ${status}`);
                 console.log("successfully saved booking info");
