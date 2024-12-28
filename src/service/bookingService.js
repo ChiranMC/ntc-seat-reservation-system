@@ -39,7 +39,7 @@ class BookingService {
             );
             const seatsAvailable = await this.checkSeatsAvailability(booking.selectedSeats, booking.numberPlate, booking.scheduled_slot, booking.bookingDate);
             
-            if (!seatsAvailable) {
+            if (seatsAvailable) {
                 const paymentIssuedTime = new Date();
                 const payment = await this.sendpayment(booking.passenger_id, bookingData.paymentAmount, paymentIssuedTime);
                 let bookedCount = 0;
