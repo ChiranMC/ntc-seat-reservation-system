@@ -41,18 +41,18 @@ class BookingService {
             
             if (seatsAvailable) {
                 const paymentIssuedTime = new Date();
-                const payment = await this.sendpayment(booking.passenger_id, bookingData.paymentAmount, paymentIssuedTime);
+                const payment = await this.sendpayment(booking.passenger_id, booking.paymentAmount, paymentIssuedTime);
                 let bookedCount = 0;
                 if (payment) {
                     const payment_id = payment.payment_receipt_id;
-                    for (let seat of bookingData.selectedSeats) {
+                    for (let seat of booking.selectedSeats) {
                         const bookinfo = {
-                            passenger_id: bookingData.passenger_id,
+                            passenger_id: booking.passenger_id,
                             payment_reciept_id: payment_id,
-                            number_plate: bookingData.numberPlate,
-                            scheduled_slot: bookingData.scheduled_slot,
+                            number_plate: booking.numberPlate,
+                            scheduled_slot: booking.scheduled_slot,
                             seat_no: seat,
-                            booking_date: bookingData.bookingDate
+                            booking_date: booking.bookingDate
                         };
                         const saved = await PassengerBookingsRepository.createBooking(bookinfo);
                         if(saved){
