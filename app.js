@@ -16,7 +16,7 @@ app.use('/api-checker', swaggerUi.serve, swaggerUi.setup(swaggerConfig));
 app.use('/passenger', passengerRoutes);
 app.use('/bus-routes', routesRoutes);
 app.use('/schedules', schedules);
-app.use('./booking', booking);
+app.use('/booking', booking);
 app.use
 // (async () => {
 //   try {
