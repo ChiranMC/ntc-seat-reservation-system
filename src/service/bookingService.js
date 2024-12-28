@@ -44,7 +44,7 @@ class BookingService {
                 const payment = await this.sendpayment(booking.passenger_id, bookingData.paymentAmount, paymentIssuedTime);
                 let bookedCount = 0;
                 if (payment) {
-                    const payment_id = payment.payment_reciept_id;
+                    const payment_id = payment.payment_receipt_id;
                     for (let seat of bookingData.selectedSeats) {
                         const bookinfo = {
                             passenger_id: bookingData.passenger_id,
