@@ -44,7 +44,7 @@ class BookingService {
             }
     
             const paymentIssuedTime = new Date();
-            const payment = { passenger_id, paymentAmount, issued_time: paymentIssuedTime };
+            const payment = { passenger_id, payment_amount: paymentAmount, issued_time: paymentIssuedTime };
     
             console.log("Initiating payment with data:", payment);
             const payment_reciept_id = await PaymentRecieptHistoryRepository.addNewRecieptHistory(payment);
