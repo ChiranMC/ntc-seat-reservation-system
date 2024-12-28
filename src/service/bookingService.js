@@ -41,14 +41,14 @@ class BookingService {
             
             if (seatsAvailable) {
                 const paymentIssuedTime = new Date();
+                console.log(`payment.payment_receipt_id -> ${booking.paymentAmount}`)
                 const payment = await this.sendpayment(booking.passenger_id, booking.paymentAmount, paymentIssuedTime);
                 let bookedCount = 0;
                 if (payment) {
-                    const payment_id = payment.payment_receipt_id;
                     for (let seat of booking.selectedSeats) {
                         const bookinfo = {
                             passenger_id: booking.passenger_id,
-                            payment_reciept_id: payment_id,
+                            payment_reciept_id: payment.payment_receipt_id,
                             number_plate: booking.numberPlate,
                             scheduled_slot: booking.scheduled_slot,
                             seat_no: seat,
