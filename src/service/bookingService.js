@@ -20,75 +20,68 @@ class BookingService {
         }
     }
     
-    async sendpayment(passenger_id, paymentAmount, issueTime) {
-        const payment = { passenger_id, paymentAmount, issueTime };
+    async sendPayment(passenger_id, paymentAmount, issueTime) {
         try {
+            const payment = { passenger_id, paymentAmount, issueTime };
             const confirmation = await PaymentRecieptHistoryRepository.addNewRecieptHistory(payment);
             return confirmation;
         } catch (error) {
             console.error("Error inserting payment info:", error);
-            return null;
+            throw new Error("Payment failed.");
         }
     }
-    
-    async BookingSeats(bookingData) {
+
+    async bookSeats(bookingData) {
         try {
-            const booking = new BookingDTO(
-                bookingData.passenger_id,
-                bookingData.paymentAmount,
-                bookingData.bookingDate,
-                bookingData.selectedSeats,
-                bookingData.numberPlate,
-                bookingData.scheduled_slot
-            );
-            console.log(`All DTO info - Debug info: ${JSON.stringify(booking)}`);
+            const {
+                passenger_id,
+                paymentAmount,
+                bookingDate,
+                selectedSeats,
+                numberPlate,
+                scheduled_slot
+            } = bookingData;
+
+            console.log(`Booking data received: ${JSON.stringify(bookingData)}`);
             const seatsAvailable = await this.checkSeatsAvailability(
-                booking.selectedSeats,
-                booking.numberPlate,
-                booking.scheduled_slot,
-                booking.bookingDate
+                selectedSeats,
+                numberPlate,
+                scheduled_slot,
+                bookingDate
             );
+
             if (seatsAvailable) {
                 const paymentIssuedTime = new Date();
-                console.log(`Payment amount: ${booking.paymentAmount}`);
-                const payment = await this.sendpayment(
-                    booking.passenger_id,
-                    booking.paymentAmount,
-                    paymentIssuedTime
-                );
-                if (payment) {
-                    console.log(`Payment ID: ${payment}`);
-                    let bookedCount = 0;
-                    for (const seat of booking.selectedSeats) {
-                        const bookinfo = {
-                            passenger_id: booking.passenger_id,
-                            payment_reciept_id: payment,
-                            number_plate: booking.numberPlate,
-                            scheduled_slot: booking.scheduled_slot,
-                            seat_no: seat,
-                            booking_date: booking.bookingDate
-                        };
-    
-                        const saved = await PassengerBookingsRepository.createBooking(bookinfo);
-                        if (saved) {
-                            bookedCount++;
-                        }
-                    }
-    
-                    if (bookedCount > 0) {
-                        return bookedCount;
-                    } else {
-                        console.error("Failed to book any seats.");
-                        return 0;
-                    }
-                } else {
+                const paymentReceiptId = await this.sendPayment(passenger_id, paymentAmount, paymentIssuedTime);
+
+                if (!paymentReceiptId) {
                     console.error("Payment verification failed.");
                     return 0;
                 }
-            } else {
-                console.error(
-                    `Seats selected by passenger ${booking.passenger_id} are already booked.`
-                );
+                console.log(`Payment successful. Receipt ID: ${paymentReceiptId}`);
+                const bookingPromises = selectedSeats.map(seat => {
+                    const bookingInfo = {
+                        passenger_id,
+                        payment_reciept_id: paymentReceiptId,
+                        number_plate: numberPlate,
+                        scheduled_slot,
+                        seat_no: seat,
+                        booking_date: bookingDate
+                    };
+                    return PassengerBookingsRepository.createBooking(bookingInfo);
+                });
+                const bookingResults = await Promise.all(bookingPromises);
+
+                const successfulBookings = bookingResults.filter(result => result).length;
+                if (successfulBookings > 0) {
+                    console.log(`Successfully booked ${successfulBookings} seats.`);
+                    return successfulBookings;
+                } else {
+                    console.error("No seats were successfully booked.");
+                    return 0;
+                }
+            }else{
+                console.error(`Selected seats are already booked.`);
                 return 0;
             }
         } catch (error) {
