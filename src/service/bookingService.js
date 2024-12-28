@@ -47,21 +47,35 @@ class BookingService {
                 console.log(`payment id ${payment}`);
                 let bookedCount = 0;
                 if (payment) {
-                    for (let seat of booking.selectedSeats) {
+                    booking.selectedSeats.forEach(async (seat) => {
                         const bookinfo = {
                             passenger_id: booking.passenger_id,
-                            payment_reciept_id: payment.payment_receipt_id,
+                            payment_reciept_id: payment,
                             number_plate: booking.numberPlate,
                             scheduled_slot: booking.scheduled_slot,
                             seat_no: seat,
                             booking_date: booking.bookingDate
                         };
+                
                         const saved = await PassengerBookingsRepository.createBooking(bookinfo);
-                        if(saved){
+                        if (saved) {
                             bookedCount++;
-                        }
+                        }});
+                    // for (let seat of booking.selectedSeats) {
+                    //     const bookinfo = {
+                    //         passenger_id: booking.passenger_id,
+                    //         payment_reciept_id: payment,
+                    //         number_plate: booking.numberPlate,
+                    //         scheduled_slot: booking.scheduled_slot,
+                    //         seat_no: seat,
+                    //         booking_date: booking.bookingDate
+                    //     };
+                    //     const saved = await PassengerBookingsRepository.createBooking(bookinfo);
+                    //     if(saved){
+                    //         bookedCount++;
+                    //     }
 
-                    }
+                    // }
                     if (bookedCount>0) {
                         return 1;
                     }
