@@ -9,12 +9,14 @@ const swaggerConfig = require('./src/config/swaggerInfo');
 const passengerRoutes = require('./src/routes/passengerRoutes');
 const routesRoutes = require('./src/routes/routesRoutes');
 const schedules = require('./src/routes/busTimeScheduleRoutes');
+const booking = require('./src/routes/bookingRoutes');
 
 app.use(express.json());
 app.use('/api-checker', swaggerUi.serve, swaggerUi.setup(swaggerConfig));
 app.use('/passenger', passengerRoutes);
 app.use('/bus-routes', routesRoutes);
 app.use('/schedules', schedules);
+app.use('./booking', booking);
 app.use
 // (async () => {
 //   try {
