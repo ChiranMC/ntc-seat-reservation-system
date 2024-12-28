@@ -18,11 +18,19 @@ class PassengerBookingsRepository{
         }
     }
 
-    async createBooking(bookingInfo){
-        try{
-            return await PassengerBookings.create(bookingInfo);
-        }catch(error){
-            console.error(error);
+    async createBooking({ passenger_id, payment_reciept_id, number_plate, scheduled_slot, seat_no, booking_date }) {
+        try {
+            return await PassengerBookings.create({
+                passenger_id,
+                payment_reciept_id,
+                number_plate,
+                scheduled_slot,
+                seat_no,
+                booking_date
+            });
+        } catch (error) {
+            console.error("Error creating booking:", error);
+            throw error; // Optional: Propagate the error to the calling method
         }
     }
 }

@@ -47,18 +47,18 @@ class BookingService {
             const payment = { passenger_id, paymentAmount, issued_time: paymentIssuedTime };
     
             console.log("Initiating payment with data:", payment);
-            const paymentReceiptId = await PaymentRecieptHistoryRepository.addNewRecieptHistory(payment);
+            const payment_reciept_id = await PaymentRecieptHistoryRepository.addNewRecieptHistory(payment);
     
-            if (!paymentReceiptId) {
+            if (!payment_reciept_id) {
                 console.error("Payment verification failed.");
                 return 0;
             }
     
-            console.log(`Payment successful. Receipt ID: ${paymentReceiptId}`);
+            console.log(`Payment successful. Receipt ID: ${payment_reciept_id}`);
             const bookingPromises = selectedSeats.map(seat => {
                 const bookingInfo = {
                     passenger_id,
-                    payment_reciept_id: paymentReceiptId,
+                    payment_reciept_id,
                     number_plate: numberPlate,
                     scheduled_slot,
                     seat_no: seat,
@@ -66,7 +66,14 @@ class BookingService {
                 };
     
                 console.log("Booking Info for Seat:", bookingInfo);
-                return PassengerBookingsRepository.createBooking(bookingInfo);
+                return PassengerBookingsRepository.createBooking({
+                    passenger_id: passenger_id, 
+                    payment_reciept_id: payment_reciept_id,
+                    number_plate: numberPlate,
+                    scheduled_slot: scheduled_slot,
+                    seat_no: seat,
+                    booking_date: bookingDate
+                });
             });
     
             const bookingResults = await Promise.all(bookingPromises);
