@@ -37,6 +37,7 @@ class BookingService {
                 bookingData.numberPlate,
                 bookingData.scheduled_slot
             );
+            console.log(`all dto info - > debug ${booking}`);
             const seatsAvailable = await this.checkSeatsAvailability(booking.selectedSeats, booking.numberPlate, booking.scheduled_slot, booking.bookingDate);
             
             if (seatsAvailable) {
