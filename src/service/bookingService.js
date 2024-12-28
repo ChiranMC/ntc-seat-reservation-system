@@ -52,7 +52,9 @@ class BookingService {
 
             if (seatsAvailable) {
                 const paymentIssuedTime = new Date();
-                const paymentReceiptId = await this.sendPayment(passenger_id, paymentAmount, paymentIssuedTime);
+                //const paymentReceiptId = await this.sendPayment(passenger_id, paymentAmount, paymentIssuedTime);
+                const payment = {passenger_id, paymentAmount, paymentIssuedTime};
+                const paymentReceiptId = await PaymentRecieptHistoryRepository.addNewRecieptHistory(payment);
 
                 if (!paymentReceiptId) {
                     console.error("Payment verification failed.");
