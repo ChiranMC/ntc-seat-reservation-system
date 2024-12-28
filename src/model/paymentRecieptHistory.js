@@ -9,7 +9,7 @@ const PaymentRecieptHistory = sequelize.define('PaymentRecieptHistory',{
     },
     passenger_id: DataTypes.STRING,
     payment_amount: DataTypes.FLOAT,
-    issued_time: DataTypes.TIME,
+    issued_time: DataTypes.DATE,
 },{
     tableName: 'payment_receipt_history',
     timestamps: false,
