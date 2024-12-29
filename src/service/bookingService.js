@@ -5,8 +5,8 @@ const bustSeatsUtill = require('../utils/busSeatsUtill');
 const BookingDTO = require('../dto/bookingDTO');
 
 class BookingService {
-    checkSeatsAvailability(selectedSeats = [], numberPlate, scheduled_slot, booking_date) {
-        const bookedSeats = PassengerBookingsRepository.getBookedSeatsListByNumberPlateAndTimeSlot(numberPlate, scheduled_slot, booking_date);
+    async checkSeatsAvailability(selectedSeats = [], numberPlate, scheduled_slot, booking_date) {
+        const bookedSeats = await PassengerBookingsRepository.getBookedSeatsListByNumberPlateAndTimeSlot(numberPlate, scheduled_slot, booking_date);
         if (bookedSeats.length > 0) {
             return bookedSeats.some(seat => !selectedSeats.includes(seat));
         } else {
