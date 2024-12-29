@@ -20,13 +20,13 @@ class BookingService {
             if (busType === 'Semi-Luxury' || busType === 'Normal') {
                 const bookedSeats = await PassengerBookingsRepository.getBookedSeatsListByNumberPlateAndTimeSlot(number_plate, scheduled_slot, booking_date);
                 const availableSeats = bustSeatsUtill.filterAvailableSemiLuxuryOrNormalSeats(bookedSeats);
-                console.log("successfully fetched all available seats");
+                console.log("successfully fetched all available seats ->", availableSeats);
                 return availableSeats;
             }
             else if (busType === 'Luxury') {
                 const bookedSeats = await PassengerBookingsRepository.getBookedSeatsListByNumberPlateAndTimeSlot(number_plate, scheduled_slot, booking_date);
                 const availableSeats = bustSeatsUtill.filterAvailableLuxurySeats(bookedSeats);
-                console.log("successfully fetched all available seats");
+                console.log("successfully fetched all available seats ->", availableSeats);
                 return availableSeats;
             }
         } catch (error) {
