@@ -1,5 +1,6 @@
 const { DataTypes } = require('sequelize');
 const sequelize = require('../config/database');
+// const BusTimeSchedules = require('./busTimeSchedules');
 
 const Buses = sequelize.define('buses', {
     ntc_registered_number:{
@@ -16,5 +17,7 @@ const Buses = sequelize.define('buses', {
     tableName: 'buses',
     timestamps: false,
 });
+
+// Buses.hasMany(BusTimeSchedules, { foreignKey: 'bus_ntc', as: 'busTimeSchedules' });
 
 module.exports = Buses;

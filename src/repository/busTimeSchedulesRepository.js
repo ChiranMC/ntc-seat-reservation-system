@@ -5,9 +5,9 @@ class BusTimeSchedulesRepository{
         return await BusTimeSchedules.findAll({where: {route_id}});
     }
 
-    async findBySlotId(slot_id){
+    async findBySlotId(slot_id) {
         return await BusTimeSchedules.findByPk(slot_id, {
-            attributes: ['route_id', 'bus_ntc' , 'departure_time' , 'arrival_time'],
+            attributes: ['route_id', 'bus_ntc', 'departure_time', 'arrival_time'],
         });
     }
 }

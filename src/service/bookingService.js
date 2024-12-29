@@ -1,11 +1,13 @@
 const PassengerBookingsRepository = require('../repository/passengerBookingRepository');
 const PaymentRecieptHistoryRepository = require('../repository/PaymentRecieptHistoryRepositoy');
+
 const BusesRepository = require('../repository/busesRepository');
 
 const bustSeatsUtill = require('../utils/busSeatsUtill');
 const BookingDTO = require('../dto/bookingDTO');
 
 class BookingService {
+
     async getAllAvailableSeats(number_plate, scheduled_slot, booking_date){
         try {
             const busType = BusesRepository.getBusTypeByNumberPlate(number_plate);

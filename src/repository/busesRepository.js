@@ -2,7 +2,7 @@ const Buses = require('../model/buses');
 
 class BusesRepository{
     async findByBusNTC(ntc_registered_number){
-        return await Buses.findOne({where: {ntc_registered_number}});
+        return await Buses.findByPk(ntc_registered_number);
     }
 
     async getBusTypeByNumberPlate(number_plate) {

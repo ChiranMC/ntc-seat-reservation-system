@@ -16,7 +16,7 @@ class BusTimeSchedulesController {
         try{
             const { slot_id } = req.params;
             console.log(`Request came to fetch all bus info on schduled slot -> ${slot_id}`);
-            const busAllDetials = BusTimeSchedulesService.getBuseDetailsByScehduleId(slot_id);
+            const busAllDetials = await BusTimeSchedulesService.getBuseDetailsByScehduleId(slot_id);
             res.status(200).json(busAllDetials);
             console.log(`Successfully fetched all Bus Details informations under schedule slot id : ${slot_id}`);
         }catch (error){

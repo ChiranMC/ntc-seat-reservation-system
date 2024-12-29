@@ -15,6 +15,27 @@ const router = express.Router();
  */
 router.get('/getSchedules', BusTimeSchedulesController.getSchedulesByRouteId);
 
+/**
+ * @swagger
+ * /schedules/getAllBusDetails/{slot_id}:
+ *   get:
+ *     summary: Fetch bus details by schedule slot ID
+ *     description: Retrieve detailed bus information, including route, schedule, and bus details, for a given schedule slot ID.
+ *     parameters:
+ *       - in: path
+ *         name: slot_id
+ *         required: true
+ *         description: The ID of the schedule slot to fetch details for.
+ *         schema:
+ *           type: integer
+ *     responses:
+ *       200:
+ *         description: Successfully retrieved bus details.
+ *       400:
+ *         description: Invalid slot ID provided.
+ *       500:
+ *         description: Internal server error.
+ */
 router.get('/getAllBusDetails/:slot_id',(req, res) => BusTimeSchedulesController.getFullBusDetailsBySlotId(req, res));
 
 module.exports = router;

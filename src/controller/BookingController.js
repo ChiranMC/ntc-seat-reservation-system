@@ -16,6 +16,7 @@ class BookingController{
             }
         } catch (error) {
             res.status(500).json("failed to save booking information");
+
             console.log(`error occured while calling bus ticket service method to save and create bookings ${error}`);
         }
     }
@@ -36,6 +37,8 @@ class BookingController{
         } catch (error) {
             res.status(500).json("failed to fetch available seats information");
             console.log(`error occured while calling bus ticket service method to fetch availabl seats info-> ${error}`);
+            console.log(`error occured while calling bus ticket service method to save and create bookings ${error}`)
+
         }
     }
 }
