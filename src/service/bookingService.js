@@ -1,10 +1,34 @@
 const PassengerBookingsRepository = require('../repository/passengerBookingRepository');
 const PaymentRecieptHistoryRepository = require('../repository/PaymentRecieptHistoryRepositoy');
 
+const BusesRepository = require('../repository/busesRepository');
+
 const bustSeatsUtill = require('../utils/busSeatsUtill');
 const BookingDTO = require('../dto/bookingDTO');
 
 class BookingService {
+
+    async getAllAvailableSeats(number_plate, scheduled_slot, booking_date){
+        try {
+            const busType = BusesRepository.getBusTypeByNumberPlate(number_plate);
+            if (busType === 'Semi-Luxury' || busType === 'Normal') {
+                const bookedSeats = await PassengerBookingsRepository.getBookedSeatsListByNumberPlateAndTimeSlot(number_plate, scheduled_slot, booking_date);
+                const availableSeats = bustSeatsUtill.filterAvailableSemiLuxuryOrNormalSeats(bookedSeats);
+                console.log("successfully fetched all available seats");
+                return availableSeats;
+            }
+            else if (busType === 'Luxury') {
+                const bookedSeats = await PassengerBookingsRepository.getBookedSeatsListByNumberPlateAndTimeSlot(number_plate, scheduled_slot, booking_date);
+                const availableSeats = bustSeatsUtill.filterAvailableLuxurySeats(bookedSeats);
+                console.log("successfully fetched all available seats");
+                return availableSeats;
+            }
+        } catch (error) {
+            console.error("Error occurred while fetching available seats information:", error);
+            return [];
+        }
+    }
+
     async checkSeatsAvailability(selectedSeats = [], numberPlate, scheduled_slot, booking_date) {
         const bookedSeats = await PassengerBookingsRepository.getBookedSeatsListByNumberPlateAndTimeSlot(numberPlate, scheduled_slot, booking_date);
         if (bookedSeats.length > 0) {
