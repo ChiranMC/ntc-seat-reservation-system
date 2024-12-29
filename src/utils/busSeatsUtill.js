@@ -2,15 +2,14 @@ class BusSeatsUtill {
     async filterAvailableSemiLuxuryOrNormalSeats(bookedSeats = []) {
         const fullSeatsList = [];
         for (let num = 1; num <= 45; num++) {
-            if (num >= 20 && num <= 45) {
-                fullSeatsList.push('L' + num); 
-            } else if (num >= 1 && num <= 19) {
-                fullSeatsList.push('R' + num); 
-            } else {
+            if (num >= 1 && num <= 20) {
+                fullSeatsList.push('R' + num);
+            } else if (num >= 21 && num <= 40) {
+                fullSeatsList.push('L' + num);
+            } else if (num >= 41 && num <= 45) {
                 fullSeatsList.push('B' + num);
             }
         }
-
         const availableSeats = fullSeatsList.filter(seat => !bookedSeats.includes(seat));
         return availableSeats;
     }
@@ -18,15 +17,14 @@ class BusSeatsUtill {
     async filterAvailableLuxurySeats(bookedSeats = []) {
         const fullSeatsList = [];
         for (let num = 1; num <= 50; num++) {
-            if (num >= 22 && num <= 50) {
-                fullSeatsList.push('L' + num);
-            } else if (num >= 1 && num <= 21) {
+            if (num >= 1 && num <= 20) {
                 fullSeatsList.push('R' + num);
-            } else {
+            } else if (num >= 21 && num <= 40) {
+                fullSeatsList.push('L' + num);
+            } else if (num >= 41 && num <= 50) {
                 fullSeatsList.push('B' + num);
             }
         }
-
         const availableSeats = fullSeatsList.filter(seat => !bookedSeats.includes(seat));
         return availableSeats;
     }
