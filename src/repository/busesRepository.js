@@ -7,13 +7,13 @@ class BusesRepository{
 
     async getBusTypeByNumberPlate(number_plate) {
         try {
-            const busType = await Buses.findAll({
+            const busType = await Buses.findOne({
                 where: {
                     vehicle_register_number: number_plate,
                 },
                 attributes: ['type'],
             });
-            return busType;
+            return busType ? busType.type : null;
         } catch (error) {
             console.error(error);
             return null;

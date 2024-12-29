@@ -12,7 +12,11 @@ class BookingService {
         try {
             console.log("request came to fetch seats availabilty information")
             const busType = BusesRepository.getBusTypeByNumberPlate(number_plate);
-            console.log(`bus type retreived ${busType}`);
+            console.log(`bus type retreived `, busType);
+            if (!busType) {
+                console.error("No bus type found for the given number plate");
+                return [];
+            }
             if (busType === 'Semi-Luxury' || busType === 'Normal') {
                 const bookedSeats = await PassengerBookingsRepository.getBookedSeatsListByNumberPlateAndTimeSlot(number_plate, scheduled_slot, booking_date);
                 const availableSeats = bustSeatsUtill.filterAvailableSemiLuxuryOrNormalSeats(bookedSeats);
