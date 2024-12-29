@@ -28,6 +28,8 @@ router.get('/getSchedules', jwtAuthentication, BusTimeSchedulesController.getSch
  *         description: The ID of the schedule slot to fetch details for.
  *         schema:
  *           type: integer
+ *     security:
+ *       - bearerAuth: []
  *     responses:
  *       200:
  *         description: Successfully retrieved bus details.
