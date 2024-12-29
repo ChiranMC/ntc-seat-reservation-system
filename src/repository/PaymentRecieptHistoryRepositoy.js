@@ -4,7 +4,7 @@ class PaymentRecieptHistoryRepository{
     async saveToPayment(paymentData) {
         try {
             const payment = await PaymentRecieptHistory.create(paymentData);  
-            return payment.payment_id;  
+            return payment;  
         } catch (error) {
             console.error('Error saving payment:', error);
             throw error;

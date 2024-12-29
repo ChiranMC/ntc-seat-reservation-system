@@ -47,14 +47,14 @@ class BookingService {
             const payment = { passenger_id, payment_amount: paymentAmount, issued_time: paymentIssuedTime };
     
             console.log("Initiating payment with data:", payment);
-            const payment_reciept_id = await PaymentRecieptHistoryRepository.saveToPayment(payment);
+            const payment_confo = await PaymentRecieptHistoryRepository.saveToPayment(payment);
     
-            if (!payment_reciept_id) {
+            if (!payment_confo) {
                 console.error("Payment verification failed.");
                 return 0;
             }
     
-            console.log(`Payment successful. Receipt ID: ${payment_reciept_id}`);
+            console.log(`Payment successful. Receipt ID: ${payment_confo.payment_reciept_id}`);
             const bookingPromises = selectedSeats.map(seat => {
                 const bookingInfo = {
                     passenger_id,
@@ -68,7 +68,7 @@ class BookingService {
                 console.log("Booking Info for Seat:", bookingInfo);
                 const savedRcd = PassengerBookingsRepository.createBooking({
                     passenger_id: passenger_id, 
-                    payment_reciept_id: payment_reciept_id,
+                    payment_reciept_id: payment_confo.payment_reciept_id,
                     number_plate: numberPlate,
                     scheduled_slot: scheduled_slot,
                     seat_no: seat,
