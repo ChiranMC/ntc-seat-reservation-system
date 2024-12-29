@@ -7,11 +7,29 @@ const router = express.Router();
  * @swagger
  * /schedules/getSchedules:
  *   get:
- *     summary: get All schedules
- *     description: fetching all schedules by id
+ *     summary: Get all schedules by route ID
+ *     description: Fetch all schedules for a specific route by providing the route ID.
+ *     security:
+ *       - bearerAuth: []
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               route_id:
+ *                 type: integer
+ *                 example: 1
  *     responses:
  *       200:
  *         description: Successfully got schedule data.
+ *       400:
+ *         description: Invalid route ID provided.
+ *       401:
+ *         description: Unauthorized - Token is missing or invalid.
+ *       500:
+ *         description: Internal server error.
  */
 router.get('/getSchedules', jwtAuthentication, BusTimeSchedulesController.getSchedulesByRouteId);
 
