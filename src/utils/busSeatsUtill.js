@@ -32,6 +32,7 @@ class BusSeatsUtill{
         }
 
         const availableSeats = fullSeatsList.filter(seat => !bookedSeats.includes(seat));
+        return availableSeats;
     }
 }
 
