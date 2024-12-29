@@ -6,7 +6,7 @@ const swaggerOptions = {
     info: {
       title: 'ntc-seat-reservation-system',
       version: '1.0.0',
-      description: 'NTC API End points',
+      description: 'NTC API Endpoints',
     },
     servers: [
       {
@@ -14,8 +14,22 @@ const swaggerOptions = {
         description: 'National Transportation Seat Reservation System',
       },
     ],
+    components: {
+      securitySchemes: {
+        bearerAuth: {
+          type: 'http',
+          scheme: 'bearer',
+          bearerFormat: 'JWT',
+        },
+      },
+    },
+    security: [
+      {
+        bearerAuth: [],
+      },
+    ],
   },
-  apis: ['./src/routes/*.js'], 
+  apis: ['./src/routes/*.js'],
 };
 
 const swaggerSpec = swaggerJsdoc(swaggerOptions);
