@@ -21,8 +21,8 @@ class PassengerController {
       const {nic_no, password} = req.body;
       const loginVerified = await passengerService.verifyPassenger(nic_no, password);
       if (loginVerified) {
-        
-        res.status(200).json({ message: 'Passenger verified sucessfully' });
+        const jwtToken = jwt.sign({ nic_no, password }, JWT_SECRET, { expiresIn: '1h' });
+        res.status(200).json({ message: 'Passenger verified sucessfully', jwtToken});
         console.log('passenger verification sucessfull for user with nic : ', nic_no);
       }
     }catch(error){

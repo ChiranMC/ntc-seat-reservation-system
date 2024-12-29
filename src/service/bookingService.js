@@ -19,6 +19,7 @@ class BookingService {
             }
             if (busType === 'Semi-Luxury' || busType === 'Normal') {
                 const bookedSeats = await PassengerBookingsRepository.getBookedSeatsListByNumberPlateAndTimeSlot(number_plate, scheduled_slot, booking_date);
+                console.log("booked seats list ->", bookedSeats);
                 const availableSeats = await bustSeatsUtill.filterAvailableSemiLuxuryOrNormalSeats(bookedSeats);
                 console.log("successfully fetched all available seats ->", availableSeats);
                 return availableSeats;
