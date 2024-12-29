@@ -5,18 +5,13 @@ const bustSeatsUtill = require('../utils/busSeatsUtill');
 const BookingDTO = require('../dto/bookingDTO');
 
 class BookingService {
-    checkSeatsAvailability(selectedSeats = [], numberPlate, scheduled_slot, booking_date){
+    checkSeatsAvailability(selectedSeats = [], numberPlate, scheduled_slot, booking_date) {
         const bookedSeats = PassengerBookingsRepository.getBookedSeatsListByNumberPlateAndTimeSlot(numberPlate, scheduled_slot, booking_date);
         if (bookedSeats.length > 0) {
-            const BookedSeatsArray = bookedSeats;
-            if (BookedSeatsArray.filter(seat => !selectedSeats.includes(seat)).length > 0) {
-                return true;
-            } else {
-                return false;
-            }
+            return bookedSeats.some(seat => !selectedSeats.includes(seat));
         } else {
             console.log('No seats booked for the given date and slot');
-            return true;
+            return false; // Seats are available
         }
     }
     
