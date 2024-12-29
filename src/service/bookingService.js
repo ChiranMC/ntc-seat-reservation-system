@@ -54,7 +54,7 @@ class BookingService {
                 return 0;
             }
     
-            console.log(`Payment successful. Receipt ID: ${payment_confo.payment_reciept_id}`);
+            console.log(`Payment successful. Receipt ID: ${payment_confo}`);
             const bookingPromises = selectedSeats.map(seat => {
                 const bookingInfo = {
                     passenger_id,
@@ -68,7 +68,7 @@ class BookingService {
                 console.log("Booking Info for Seat:", bookingInfo);
                 const savedRcd = PassengerBookingsRepository.createBooking({
                     passenger_id: passenger_id, 
-                    payment_reciept_id: payment_confo.payment_reciept_id,
+                    payment_reciept_id: payment_confo,
                     number_plate: numberPlate,
                     scheduled_slot: scheduled_slot,
                     seat_no: seat,
