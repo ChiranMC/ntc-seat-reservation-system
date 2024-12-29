@@ -47,7 +47,7 @@ class BookingService {
             const payment = { passenger_id, payment_amount: paymentAmount, issued_time: paymentIssuedTime };
     
             console.log("Initiating payment with data:", payment);
-            const payment_reciept_id = await PaymentRecieptHistoryRepository.addNewRecieptHistory(payment);
+            const payment_reciept_id = await PaymentRecieptHistoryRepository.saveToPayment(payment);
     
             if (!payment_reciept_id) {
                 console.error("Payment verification failed.");
@@ -66,7 +66,7 @@ class BookingService {
                 };
     
                 console.log("Booking Info for Seat:", bookingInfo);
-                return PassengerBookingsRepository.createBooking({
+                const savedRcd = PassengerBookingsRepository.createBooking({
                     passenger_id: passenger_id, 
                     payment_reciept_id: payment_reciept_id,
                     number_plate: numberPlate,

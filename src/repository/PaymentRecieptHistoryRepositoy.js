@@ -1,12 +1,13 @@
 const PaymentRecieptHistory = require('../model/paymentRecieptHistory');
 
 class PaymentRecieptHistoryRepository{
-    async addNewRecieptHistory(paymentReciept){
+    async saveToPayment(paymentData) {
         try {
-            const pymnt = await PaymentRecieptHistory.create(paymentReciept);
-            return pymnt.payment_receipt_id;
+            const payment = await PaymentRecieptHistory.create(paymentData);  
+            return payment.payment_id;  
         } catch (error) {
-            console.error(error);
+            console.error('Error saving payment:', error);
+            throw error;
         }
     }
 }

@@ -15,7 +15,7 @@ const PassengerBooking = sequelize.define('passengerBooking', {
     booking_date: DataTypes.DATE,
 },{
     tableName: 'passenger_bookings',
-    timestamps: false,
+    timestamps: true,
 });
 
 module.exports = PassengerBooking;
