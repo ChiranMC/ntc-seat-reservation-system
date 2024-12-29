@@ -1,4 +1,7 @@
 const passengerService = require('../service/passengerService');
+const jwt = require('jsonwebtoken');
+
+const JWT_SECRET = "8ff2332b46a7e76aac621bf77a417d5eeaf3ca038829e4e118a36d98824a43855729571f95d1b83371d240fff83e7ddd4e2e650c6838ebce095e6197a8918576";
 
 class PassengerController {
   async registerPassenger(req, res) {
@@ -18,6 +21,7 @@ class PassengerController {
       const {nic_no, password} = req.body;
       const loginVerified = await passengerService.verifyPassenger(nic_no, password);
       if (loginVerified) {
+        
         res.status(200).json({ message: 'Passenger verified sucessfully' });
         console.log('passenger verification sucessfull for user with nic : ', nic_no);
       }
