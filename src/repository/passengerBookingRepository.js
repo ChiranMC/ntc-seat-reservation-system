@@ -18,11 +18,11 @@ class PassengerBookingsRepository{
         }
     }
 
-    async createBooking({ passenger_id, payment_reciept_id, number_plate, scheduled_slot, seat_no, booking_date }) {
+    async createBooking({ passenger_id, payment_receipt_id, number_plate, scheduled_slot, seat_no, booking_date }) {
         try {
             return await PassengerBookings.create({
                 passenger_id: passenger_id,
-                payment_receipt_id: payment_reciept_id,
+                payment_receipt_id: payment_receipt_id,
                 number_plate: number_plate,
                 scheduled_slot: scheduled_slot,
                 seat_no: seat_no,

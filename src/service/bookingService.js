@@ -53,7 +53,7 @@ class BookingService {
                 console.error("Payment verification failed.");
                 return 0;
             }
-    
+            const payment_id = await PaymentRecieptHistoryRepository.getPaymentIdByIssuedTime(paymentIssuedTime);
             console.log(`Payment successful. Receipt ID: ${payment_confo}`);
             const bookingPromises = selectedSeats.map(seat => {
                 const bookingInfo = {
@@ -66,9 +66,9 @@ class BookingService {
                 };
     
                 console.log("Booking Info for Seat:", bookingInfo);
-                const savedRcd = PassengerBookingsRepository.createBooking({
+                return PassengerBookingsRepository.createBooking({
                     passenger_id: passenger_id, 
-                    payment_receipt_id: payment_confo,
+                    payment_receipt_id: payment_id,
                     number_plate: numberPlate,
                     scheduled_slot: scheduled_slot,
                     seat_no: seat,
