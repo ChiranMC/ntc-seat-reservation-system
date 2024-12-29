@@ -1,6 +1,6 @@
 const express = require('express');
 const BusTimeSchedulesController = require('../controller/butTimeSchedulesContoller');
-
+const jwtAuthentication = require('../config/jwtConfig');
 const router = express.Router();
 
 /**
@@ -13,7 +13,7 @@ const router = express.Router();
  *       200:
  *         description: Successfully got schedule data.
  */
-router.get('/getSchedules', BusTimeSchedulesController.getSchedulesByRouteId);
+router.get('/getSchedules', jwtAuthentication, BusTimeSchedulesController.getSchedulesByRouteId);
 
 /**
  * @swagger
@@ -36,6 +36,6 @@ router.get('/getSchedules', BusTimeSchedulesController.getSchedulesByRouteId);
  *       500:
  *         description: Internal server error.
  */
-router.get('/getAllBusDetails/:slot_id',(req, res) => BusTimeSchedulesController.getFullBusDetailsBySlotId(req, res));
+router.get('/getAllBusDetails/:slot_id', jwtAuthentication, (req, res) => BusTimeSchedulesController.getFullBusDetailsBySlotId(req, res));
 
 module.exports = router;

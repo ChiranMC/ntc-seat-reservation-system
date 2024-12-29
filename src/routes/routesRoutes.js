@@ -1,6 +1,6 @@
 const express = require('express');
 const RouterController = require('../controller/routeController');
-
+const jwtAuthentication = require('../config/jwtConfig');
 const router = express.Router();
 
 /**
@@ -13,6 +13,6 @@ const router = express.Router();
  *       200:
  *         description: Successfully fetched all routes info .
  */
-router.get('/getAllRoutes', RouterController.getAllRoutes);
+router.get('/getAllRoutes', jwtAuthentication, RouterController.getAllRoutes);
 
 module.exports = router;
