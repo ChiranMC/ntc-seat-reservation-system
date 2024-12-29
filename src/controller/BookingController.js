@@ -26,7 +26,7 @@ class BookingController{
             const { number_plate, scheduled_slot, booking_date } = req.body;
             console.log("request came to fetch available seats info");
             const availableSeats = await BookingService.getAllAvailableSeats(number_plate,scheduled_slot,booking_date);
-            if (availableSeats) {
+            if (availableSeats != null) {
                 res.status(200).json(availableSeats);
                 console.log("successfully fetched all available information");
             }
