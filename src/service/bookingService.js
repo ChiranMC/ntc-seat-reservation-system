@@ -11,7 +11,7 @@ class BookingService {
     async getAllAvailableSeats(number_plate, scheduled_slot, booking_date){
         try {
             console.log("request came to fetch seats availabilty information")
-            const busType = BusesRepository.getBusTypeByNumberPlate(number_plate);
+            const busType = await BusesRepository.getBusTypeByNumberPlate(number_plate);
             console.log(`bus type retreived `, busType);
             if (!busType) {
                 console.error("No bus type found for the given number plate");
