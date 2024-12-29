@@ -58,7 +58,7 @@ class BookingService {
             const bookingPromises = selectedSeats.map(seat => {
                 const bookingInfo = {
                     passenger_id,
-                    payment_receipt_id,
+                    payment_confo,
                     number_plate: numberPlate,
                     scheduled_slot,
                     seat_no: seat,
