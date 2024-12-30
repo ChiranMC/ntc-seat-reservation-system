@@ -6,7 +6,7 @@ const router = express.Router();
 /**
  * @swagger
  * /schedules/getSchedules:
- *   get:
+ *   post:
  *     summary: Get all schedules by route ID
  *     description: Fetch all schedules for a specific route by providing the route ID.
  *     security:
@@ -31,7 +31,7 @@ const router = express.Router();
  *       500:
  *         description: Internal server error.
  */
-router.get('/getSchedules', jwtAuthentication, BusTimeSchedulesController.getSchedulesByRouteId);
+router.post('/getSchedules', jwtAuthentication, BusTimeSchedulesController.getSchedulesByRouteId);
 
 /**
  * @swagger
