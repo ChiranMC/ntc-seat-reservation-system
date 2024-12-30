@@ -23,7 +23,7 @@ class BookingController{
 
     async getAllAvailableSeats(req, res){
         try {
-            const { number_plate, scheduled_slot, booking_date } = req.body;
+            const { number_plate, scheduled_slot, booking_date } = req.params;
             console.log("request came to fetch available seats info");
             const availableSeats = await BookingService.getAllAvailableSeats(number_plate,scheduled_slot,booking_date);
             if (availableSeats != null) {
