@@ -1,7 +1,7 @@
 const { Sequelize } = require('sequelize');
 
-const sequelize = new Sequelize('ntc_seat_reservation_db_rd9s', 'test', 'lAm31nYB3atMFMhWbQaoZDzDTwXX8ktM', {
-  host: 'dpg-ct87snhopnds73bu7tlg-a',
+const sequelize = new Sequelize('ntc_seat_reservation_db_xg88', 'test', '3XLYwzAuLzny52M7GCfX5Paia8YPTit0', {
+  host: 'dpg-ctpc4eogph6c73dco4tg-a',
   port: 5432,
   dialect: 'postgres',
   dialectOptions: {
