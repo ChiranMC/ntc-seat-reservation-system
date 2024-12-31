@@ -72,8 +72,9 @@ const html = `
   </head>
   <body>
     <section>
-      Hello from Render!
-    </section>
+      NTC-Seat-Reservation-API is live!
+    </section><br>
+    <b>please use -> https://ntc-seat-reservation-system.onrender.com/api-checker <- to check the API endpoints using swagger</b>
   </body>
 </html>
 `;
