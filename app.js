@@ -71,11 +71,14 @@ const html = `
     </style>
   </head>
   <body>
-    <section>
+    <section style="position: absolute; top: 0; width: 100%; text-align: center;">
       NTC-Seat-Reservation-API is live!
-    </section><br>
-    <b>please use -> https://ntc-seat-reservation-system.onrender.com/api-checker <- to check the API endpoints using swagger</b>
-  </body>
+    </section>
+    <br>
+    <b style="font-size: 14px;">
+      Please use -> <a href="https://ntc-seat-reservation-system.onrender.com/api-checker" target="_blank">https://ntc-seat-reservation-system.onrender.com/api-checker</a> <- to check the API endpoints using Swagger
+    </b>
+    </body>
 </html>
 `;
 
